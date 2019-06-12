@@ -44,6 +44,83 @@
 
     console.log(calculateArea('square', 10, 10));
     console.log(calculateArea('rectangle', 15, 5));
+
+    //Задание 3
+    class Human {
+        constructor(name, age, dateOfBirth) {
+            this.name = (typeof name === 'string') ? name : 'тип введенных данных должен быть string';
+            this.age = (typeof age === 'number') ? age : 'тип введенных данных должен быть number';
+            this.dateOfBirth = (typeof dateOfBirth === 'string') ? dateOfBirth : 'тип введенных данных должен быть string';
+        }
+
+        displayInfo() {
+            return 'Name: ' + this.name + ' ' + 'Age: ' + this.age + ' ' + 'Date: ' + this.dateOfBirth;
+        }
+    }
+
+    let person = new Human('Evgeny', 29, '13.04.1990');
+    console.log(person.displayInfo());
+
+    class Employee extends Human {
+        constructor(name, age, dateOfBirth, salary, department) {
+            super(name, age, dateOfBirth);
+            this.salary = (typeof salary === 'number') ? salary : 'тип введенных данных должен быть number';
+            this.department = (typeof department === 'string') ? department : 'тип введенных данных должен быть string';
+        }
+
+        displayInfo() {
+            return super.displayInfo() + ' ' + 'Salary: ' + this.salary + ' ' + 'Department: ' + this.department;
+        }
+    }
+
+    let employee = new Employee('John', 40, '12.05', 80000, 'IT');
+    console.log(employee.displayInfo());
+
+    class Manager extends Employee {
+        constructor(name, age, dateOfBirth, salary, department) {
+            super(name, age, dateOfBirth, salary, department);
+            this.developers = [];
+        }
+
+        addDeveloper(developer) {
+            this.developers.push(developer.displayInfo());
+            developer.manager = this.name;
+        }
+
+        deleteDeveloper(developer) {
+            this.developers.splice(this.developers.indexOf(developer.displayInfo()), 1);
+            developer.manager = '';
+        }
+    }
+
+    let manager1 = new Manager('John', 40, '12.05', 80000, 'IT');
+    let manager2 = new Manager('Mike', 40, '12.05', 90000, 'IT');
+
+    class Developer extends Employee {
+        constructor(name, age, dateOfBirth, salary, department) {
+            super(name, age, dateOfBirth, salary, department);
+            this.manager = '';
+        }
+
+        changeManager(manager) {
+            this.manager = manager.name;
+            manager.developers.push(this.displayInfo());
+        }
+    }
+
+    let developer1 = new Developer('Jake', 25, '13.07', 50000, 'IT');
+    let developer2 = new Developer('Alex', 30, '15.05', 60000, 'IT');
+    let developer3 = new Developer('Nick', 32, '15.09', 70000, 'IT');
+
+    manager1.addDeveloper(developer1);
+    manager1.addDeveloper(developer2);
+    manager1.addDeveloper(developer3);
+    manager1.deleteDeveloper(developer2);
+    console.log(manager1.developers);
+
+    developer3.changeManager(manager2);
+    console.log(developer3.manager);
+    console.log(manager2.developers);
 </script>
 </body>
 </html>
