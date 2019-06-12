@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Домашнее задание 1</title>
+</head>
+<body>
+<script>
+    //Задание 1
+    const hello = () => {
+        console.log('Hello World!');
+    };
+
+    const loop = (times = 0, callback = null) => {
+        if (typeof callback !== 'function') {
+            console.log('callback is not a function');
+            return false;
+        }
+        for (let i = 0; i < Math.floor(times); i++) {
+            callback();
+        }
+    };
+
+    loop(5, hello);
+    loop(4);
+
+    //Задание 2
+    function calculateArea(figure, width, height) {
+        let area;
+        let [, ...input] = arguments;
+        switch (figure) {
+            case 'square':
+                area = width * width;
+                break;
+            case 'rectangle':
+                area = width * height;
+                break;
+
+        }
+
+        let result = {figure, area, input};
+        return result;
+    }
+
+    console.log(calculateArea('square', 10, 10));
+    console.log(calculateArea('rectangle', 15, 5));
+</script>
+</body>
+</html>
